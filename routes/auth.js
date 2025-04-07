@@ -87,5 +87,4 @@ router.post('/resetpassword/:token', async function (req, res, next) {
         next(error)
     }
 })
-
 module.exports = router;

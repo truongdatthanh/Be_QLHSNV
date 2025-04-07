@@ -6,7 +6,7 @@ let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseH
 let{check_authentication,check_authorization} = require('../utils/check_auth');
 const constants = require('../utils/constants');
 
-/* GET users listing. */
+
 
 router.get('/',check_authentication,check_authorization(constants.MOD_PERMISSION), async function (req, res, next) {
   console.log(req.headers.authorization);
