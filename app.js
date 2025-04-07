@@ -7,13 +7,12 @@ var mongoose = require('mongoose')
 let { CreateSuccessResponse, CreateErrorResponse } = require('./utils/responseHandler')
 let constants = require("./utils/constants")
 const cors = require('cors')
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-mongoose.connect("mongodb://127.0.0.1/S6");
+mongoose.connect("mongodb://127.0.0.1/quanlyhoso");
 mongoose.connection.on('connected',()=>{
   console.log("connected");
 })
@@ -35,8 +34,13 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', require('./routes/auth'));
 app.use('/roles', require('./routes/roles'));
-app.use('/products', require('./routes/products'));
-app.use('/categories', require('./routes/categories'));
+app.use('/department', require('./routes/department'));
+app.use('/position', require('./routes/position'));
+app.use('/employee', require('./routes/employee'));
+app.use('/contract', require('./routes/contract'));
+app.use('/education', require('./routes/education'));
+app.use('/rp', require('./routes/rewardPunishment'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
