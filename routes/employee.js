@@ -3,8 +3,6 @@ var router = express.Router();
 var employeeController = require('../controllers/employee')
 let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler');
 
-
-
 router.get('/', async function (req, res, next) {
     try {
         let employees = await employeeController.getAllEmployees();

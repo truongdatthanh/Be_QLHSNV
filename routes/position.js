@@ -3,8 +3,6 @@ var router = express.Router();
 var positionController = require('../controllers/position')
 let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler');
 
-
-
 router.get('/', async function (req, res, next) {
     try {
         let position = await positionController.getAllPositions();
