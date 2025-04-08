@@ -24,5 +24,16 @@ router.post('/', async function (req, res, next) {
     }
 });
 
+router.get('/:id', async function (req, res, next) {
+    try {
+        let body = req.body;
+        console.log("paramid", req.params.id);
+        let contract = await contractController.getContractsByEmployeeId(req.params.id, body);
+        CreateSuccessResponse(res, 200, contract);
+    } catch (error) {
+        CreateErrorResponse(res, 400, error.message);
+    }
+}
+);
 
 module.exports = router;

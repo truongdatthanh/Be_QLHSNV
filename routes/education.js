@@ -22,5 +22,15 @@ router.post('/', async function (req, res, next) {
     }
 });
 
+router.get('/:id', async function (req, res, next) {
+    try {
+        let body = req.body;
+        let edu = await educationController.getEduByEmployeeId(req.params.id, body);
+        CreateSuccessResponse(res, 200, edu);
+    } catch (error) {
+        CreateErrorResponse(res, 400, error.message);
+    }
+});
+
 
 module.exports = router;

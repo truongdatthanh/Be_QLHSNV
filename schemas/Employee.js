@@ -13,7 +13,8 @@ const EmployeeSchema = new mongoose.Schema({
   maritalStatus: String,
   department: { type: mongoose.Types.ObjectId, ref: 'Department' },
   position: { type: mongoose.Types.ObjectId, ref: 'Position' },
-  status: { type: String, default: 'Working' } 
+  status: { type: String, default: 'Working' } ,
+  cvFile: { type: String }
 });
 
 module.exports = mongoose.model('Employee', EmployeeSchema);

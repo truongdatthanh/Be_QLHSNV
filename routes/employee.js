@@ -17,6 +17,7 @@ router.get('/', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
     try {
         let body = req.body;
+        console.log("create: " , body);
         let newEmployee = await employeeController.createEmployee(body);
         CreateSuccessResponse(res, 200, newEmployee);
     } catch (error) {

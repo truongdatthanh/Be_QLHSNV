@@ -1,12 +1,13 @@
 const Contract = require('../schemas/Contract');
 const Employee = require('../schemas/Employee');
+const mongoose = require('mongoose');
 
 module.exports = {
     createContract: async (body) => {
         try {
-            const employee = await Employee.findOne({ employee: body.employee });
+            const employee = await Employee.findOne({ employeeCode: body.employeeCode });
             if (!employee) throw new Error('Employee not found');
-            const contract = new Contract({ 
+            const contract = new Contract({
                 employee: employee._id,
                 contractType: body.contractType,
                 startDate: body.startDate,
@@ -55,13 +56,20 @@ module.exports = {
             res.status(500).json({ error: err.message });
         }
     },
-    getContractsByEmployeeId: async (req, res) => {
+    getContractsByEmployeeId: async (id) => {
         try {
-            const contracts = await Contract.find({ employee: req.params.id }).populate('employee');
-            if (!contracts) return res.status(404).json({ message: 'Contracts not found' });
-            res.json(contracts);
+            // Validate the ID format
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                throw new Error('Invalid employee ID format');
+            }
+            // Find contracts by employee ID
+            const contracts = await Contract.findOne({ employee: id }).populate('employee');
+            if (!contracts) throw new Error('Contracts not found for this employee');
+            return contracts;
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            // Handle any errors that occur during the process
+            console.error('Error:', err.message);
+            throw new Error(err.message);
         }
     },
 

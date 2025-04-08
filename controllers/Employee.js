@@ -5,24 +5,34 @@ let Position = require('../schemas/Position');
 module.exports = {
     createEmployee: async (body) => {
         try {
-            const department = await Department.findOne({ name: body.department });
-            const position = await Position.findOne({ name: body.position });
-            const newEmployee = new Employee({
-                employeeCode: body.employeeCode,
-                fullName: body.fullName,
-                gender: body.gender,
-                birthDate: body.birthDate,
-                idCardNumber: body.idCardNumber,
-                idCardIssueDate: body.idCardIssueDate,
-                address: body.address,
-                phoneNumber: body.phoneNumber,
-                email:  body.email,
-                maritalStatus: body.maritalStatus,
-                department: department._id,
-                position: position._id,
-                status: body.status,
-            });
-            return await newEmployee.save();
+            console.log("body: ", body);
+            const employee = await Employee.findOne({ employeeCode: body.employeeCode });
+            console.log("employee: ", employee);
+            if (!employee) {
+                const department = await Department.findOne({ name: body.department });
+                const position = await Position.findOne({ name: body.position });
+                const newEmployee = new Employee({
+                    employeeCode:  body.employeeCode,
+                    fullName: body.fullName,
+                    gender: body.gender,
+                    birthDate: body.birthDate,
+                    idCardNumber: body.idCardNumber,
+                    idCardIssueDate: body.idCardIssueDate,
+                    address: body.address,
+                    phoneNumber: body.phoneNumber,
+                    email: body.email,
+                    maritalStatus: body.maritalStatus,
+                    department: department._id,
+                    position: position._id,
+                    cvFile: body.cvFile ? body.cvFile : null,
+                });
+                console.log("newEmployee: ", newEmployee);
+                return await newEmployee.save();
+            }
+            else {
+                throw new Error('Employee already exists with this employee code');
+            }
+       
         } catch (err) {
             throw new Error(err.message);
         }
