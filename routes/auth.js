@@ -12,9 +12,11 @@ let { SignUpValidator, LoginValidator, validate } = require('../utils/validator'
 
 router.post('/signup', SignUpValidator, validate, async function (req, res, next) {
     try {
+        console.log(req.body);
         let newUser = await userController.CreateAnUser(
             req.body.username, req.body.password, req.body.email, 'user'
         )
+        console.log(newUser);
         CreateSuccessResponse(res, 200, newUser)
     } catch (error) {
         next(error)

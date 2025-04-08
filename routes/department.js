@@ -24,5 +24,16 @@ router.post('/', async function (req, res, next) {
     }
 });
 
+router.delete('/:id', async function (req, res, next) {
+    try {
+        let body = req.params.id;
+        console.log("paramid", body);
+        let department = await departmentController.deleteDepartment(body);
+        CreateSuccessResponse(res, 200, department);
+    } catch (error) {
+        CreateErrorResponse(res, 400, error.message);
+    }
+});
+
 
 module.exports = router;

@@ -44,9 +44,9 @@ module.exports = {
     },
 
 
-    deleteDepartment: async (req, res) => {
+    deleteDepartment: async (id) => {
         try {
-            const deleted = await Department.findByIdAndDelete(req.params.id);
+            const deleted = await Department.findByIdAndDelete(id);
             if (!deleted) throw new Error('Department not found');
             return deleted;
         } catch (err) {
